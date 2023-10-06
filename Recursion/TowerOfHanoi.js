@@ -9,4 +9,4 @@ const towerOfHanoi=(disks, tar_1, tar_2, tar_3)=>{
 
 }
 
-towerOfHanoi(5,"A","B", "C")
+towerOfHanoi(2,"A","B", "C")

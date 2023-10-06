@@ -27,6 +27,6 @@ const keypad_combination=( keys )=>{
     
 }
 
-let combination=keypad_combination('235')
+let combination=keypad_combination('678')
 
 console.log("let combination", combination);
