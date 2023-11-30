@@ -33,27 +33,38 @@ class generic_tree {
         }
     }
 
-    find_node(node, data,subtree) {
-        if (!data) return 'Please provide valid data as nulll is not find';
+    
 
-        if (node.value === data)
-            return `${data} found under subtree of ${subtree.value} `
+    ceil_floor_of_tree(node, data, ceil, floor) {
+        if (!node) return `Invalid node, unable to find.`;
+        if (!node.value) return;
         
-            for (let child of node.children) {
-            let result = this.find_node(child, data,node)
-            if (result.includes("subtree")) {
-                return result; // Return the result if found
+        if (node.value > data) {
+            if (node.value < ceil || ceil === undefined) {
+                ceil = node.value;
+            }
+        } else if (node.value < data) {
+            if (node.value > floor || floor === undefined) {
+                floor = node.value;
             }
         }
-        return `${data} not found`
-
+    
+        for (let child of node.children) {
+            const result = this.ceil_floor_of_tree(child, data, ceil, floor);
+            ({ ceil, floor } = result);
+        }
+    
+        return { ceil, floor };
     }
+    
 }
+
+
 
 let tree = new generic_tree()
 let arr = [10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1]
 for (i = 0; arr[i] != undefined; i++) {
     tree.insert_node(arr[i])
 }
-let find_leaf = tree.find_node(tree.root, 40,tree.root)
-console.log(find_leaf);
+let find_leaf = tree.ceil_floor_of_tree(tree.root, 115, Number.POSITIVE_INFINITY,Number.NEGATIVE_INFINITY)
+console.log(find_leaf != null ? find_leaf : 'Unable to find.'); find_leaf

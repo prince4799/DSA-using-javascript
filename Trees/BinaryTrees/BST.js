@@ -7,7 +7,7 @@
 
 
 class Leaf {
-
+ 
     constructor(data) {
         this.left = null;
         this.value = data; 
@@ -36,19 +36,26 @@ class BST {
         this.insertNode(this.root, leaf)
     }
     insertNode(root, node) {
-        if (node.value <= root.value) {
-            if (root.left === null) {
-                return root.left = node;
-            }
-            this.insertNode(root.left, node)
-
-        } else {
-            if (root.right == null) {
-                return root.right = node;
-            }
-            this.insertNode(root.right, node)
-
+        if (node.value <= root.value && root.left === null) {
+            return root.left = node;
         }
+        if (node.value > root.value && root.right == null) {
+            return root.right = node;
+        }
+        this.insertNode(node.value <= root.value ? root.left : root.right, node)
+
+        // if (node.value <= root.value) {
+        //     if (root.left === null) {
+        //         return root.left = node;
+        //     }
+        //     this.insertNode(root.left, node)
+
+        // } else {
+        //     if (root.right == null) {
+        //         return root.right = node;
+        //     }
+        //     this.insertNode(root.right, node)
+        // }
     }
 
     maxDepth(root,arr) {

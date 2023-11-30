@@ -32,22 +32,24 @@ class generic_tree {
             this.stack.push(node)
         }
     }
-
-    find_node(node, data,subtree) {
-        if (!data) return 'Please provide valid data as nulll is not find';
-
-        if (node.value === data)
-            return `${data} found under subtree of ${subtree.value} `
-        
-            for (let child of node.children) {
-            let result = this.find_node(child, data,node)
-            if (result.includes("subtree")) {
-                return result; // Return the result if found
+  
+    find_node_to_root_path(node, data, subtree) {
+        if (!data) return 'Please provide valid data as null cannot be found';
+    
+        if (node.value === data) {
+            return [node.value];
+        }
+    
+        for (let child of node.children) {
+            const result = this.find_node_to_root_path(child, data, node);
+            if (result.length > 0) {
+                return [node.value, ...result]; // Include the current node in the result
             }
         }
-        return `${data} not found`
-
+    
+        return [];
     }
+    
 }
 
 let tree = new generic_tree()
@@ -55,5 +57,5 @@ let arr = [10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90,
 for (i = 0; arr[i] != undefined; i++) {
     tree.insert_node(arr[i])
 }
-let find_leaf = tree.find_node(tree.root, 40,tree.root)
-console.log(find_leaf);
+let find_leaf = tree.find_node_to_root_path(tree.root, 110,tree.root)
+console.log(find_leaf.length>0?find_leaf:'Required data not exists in the tree');
